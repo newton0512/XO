@@ -30,12 +30,12 @@ def check_win(list_, c):        # - проверка победы игрока, 
     return any([check_variant(x, c) for x in win_moves])
 
 
-def player_move(number_player):
+def player_move(number_player):         # - ход игрока
     cell_number = -1
-    while cell_number < 0:
-        print_field(xo_field)
+    while cell_number < 0:              # - повторяем пока не будет введено корректное для нас значение
+        print_field(xo_field)           # - вывод игрового поля
         print(f'Ход {number_player + 1}-го игрока ("{xo_symbols[number_player]}").')
-        try:
+        try:                            # - обработка "неправильных" символов
             cell_number = int(input('Введите номер ячейки для хода (0 - для выхода из игры): '))
             if xo_field[cell_number-1] != ' ':
                 print('Выбранная ячейка уже занята!')
@@ -45,23 +45,21 @@ def player_move(number_player):
             print('Недопустимое значение! Ход не засчитан, повторите.')
     return cell_number
 
-
-
 def game():
-    k = 0              # - номер хода
+    k = 0                   # - номер хода
     while True:
-        cell = player_move(k % 2)
+        cell = player_move(k % 2)                       # - ход игрока
         if cell:
-            xo_field[cell-1] = xo_symbols[k % 2]
+            xo_field[cell-1] = xo_symbols[k % 2]        # - сохранение символа в игровое поле
         else:
             print('Игра завершена досрочно.')
             break
-        if check_win(xo_field, xo_symbols[k % 2]):
+        if check_win(xo_field, xo_symbols[k % 2]):      # - проверка победы на данном ходе
             print_field(xo_field)
             print(f'Игрок {k % 2 + 1} победил!')
             break
         k += 1
-        if k == 9:
+        if k == 9:                                      # - если ходы закончились - ничья
             print_field(xo_field)
             print('Ничья! Игра завершена.')
             break
